@@ -33,3 +33,10 @@ h2{
     margin: 0 auto;
 }
 
+h3{
+    display: flex;
+    color: red;
+    justify-content: center;
+    font-size: 75px;
+}
+

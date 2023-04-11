@@ -4,8 +4,10 @@ let quizDiv = document.querySelector("#quiz");
 let questionTitle = document.querySelector("#question");
 let answersElement = document.querySelector("#answers");
 let startButton = document.querySelector("#startButton");
+let formElement = document.querySelector("form");
 let timer = document.querySelector("#timer");
 let points = 0;
+let quizOver = false;
 
 // Questions
 let questions = [{question: "Which hero's ultimate ability is Mass Serpant Wards?", answers:["Shadow Shaman", "Natures Prophet", "Kunkka", "Venomancer"], correctAnswer: "Shadow Shaman"},
@@ -58,6 +60,8 @@ function getAnswer(event){
         else {
             questionTitle.textContent = "All done! Your score was " + points + " Please enter your initials!";
             answersElement.innerHTML = "";
+            quizOver = true;
+            formElement.classList.remove("hide");
         } 
     }}
 
@@ -68,11 +72,12 @@ function runTimer(){
         timeLeft --;
         timer.textContent = timeLeft + " seconds remaining";
         console.log("type of interval",typeof timerInterval);
-        if(timeLeft === 0){
+        if(timeLeft === 0 || quizOver == true){
             clearInterval(timerInterval);
             console.log("Times up!");
             questionTitle.textContent = "All done! Your score was " + points + " Please enter your initials!";
             answersElement.innerHTML = "";
+            formElement.classList.remove("hide");
         }
     }, 1000);
 }
