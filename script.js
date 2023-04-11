@@ -5,27 +5,7 @@ let questionTitle = document.querySelector("#question");
 let answersElement = document.querySelector("#answers");
 let startButton = document.querySelector("#startButton");
 let timer = document.querySelector("#timer");
-
-// Timer
-let timeLeft = 60;
-timer.textContent = timeLeft + " seconds remaining";
-
-function runTimer(){
-    let timerInterval = setInterval(function(){
-        timeLeft --;
-        timer.textContent = timeLeft + " seconds left";
-
-        // fix this alerting at 1 second left
-        console.log("type of interval",typeof timerInterval);
-        if(timeLeft === 0){
-            clearInterval(timerInterval);
-        }
-        if (!timeLeft){
-            alert("Times up!");
-        }
-    }, 1000);
-
-}
+let points = 0;
 
 // Questions
 let questions = [{question: "Which hero's ultimate ability is Mass Serpant Wards?", answers:["Shadow Shaman", "Natures Prophet", "Kunkka", "Venomancer"], correctAnswer: "Shadow Shaman"},
@@ -35,12 +15,13 @@ let questions = [{question: "Which hero's ultimate ability is Mass Serpant Wards
                  {question: "Who created DotA?", answers:["Gabe Newell", "Riot Games", "Icefrog", "EA Studios"], correctAnswer: "Icefrog"}
                 ]
 
-startButton.addEventListener("click", startQuiz);
-function startQuiz(){
+// Functions
+startButton.addEventListener("click", runQuiz);
+function runQuiz(){
+    runTimer();
     startButton.classList.add("hide");
     quizDiv.classList.remove("hide");
     getQuestion();
-
 }
 
 function getQuestion(){
@@ -52,14 +33,46 @@ function getQuestion(){
         choiceElement.setAttribute("value", choice);
         choiceElement.textContent = choice;
         answersElement.appendChild(choiceElement);
-        choiceElement.addEventListener("click", getAnswer); 
     }
+    answersElement.addEventListener("click", getAnswer); 
 }
 function getAnswer(event){
     if (event.target.matches("button")){
         console.log("event", event);
         console.log("target", event.target);
+        console.log(questions[currentQuestionIndex].correctAnswer);
+        if(event.target.value == questions[currentQuestionIndex].correctAnswer){
+            alert("Correct! +10 points!");
+            points += 10;
+            console.log(points);
+        }
+        else{
+            alert("Incorrect! -5 seconds!");
+            timeLeft -= 5;
+        }
         currentQuestionIndex++;
         answersElement.innerHTML = "";
-        getQuestion();
+        if (currentQuestionIndex < 5){
+            getQuestion();
+        }
+        else {
+            questionTitle.textContent = "All done! Your score was " + points + " Please enter your initials!";
+            answersElement.innerHTML = "";
+        } 
     }}
+
+let timeLeft = 60;
+timer.textContent = timeLeft + " seconds remaining";
+function runTimer(){
+    let timerInterval = setInterval(function(){
+        timeLeft --;
+        timer.textContent = timeLeft + " seconds remaining";
+        console.log("type of interval",typeof timerInterval);
+        if(timeLeft === 0){
+            clearInterval(timerInterval);
+            console.log("Times up!");
+            questionTitle.textContent = "All done! Your score was " + points + " Please enter your initials!";
+            answersElement.innerHTML = "";
+        }
+    }, 1000);
+}

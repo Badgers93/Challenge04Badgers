@@ -4,18 +4,19 @@ body{
 
 .box1{
     display: flex;
-    padding: 50px;
-    /* width: 100%; causing overflow for some reason*/ 
+    padding: 25px;
+    /* width: 100%; causing overflow for some reason  */
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 150px;
+    height: 50px;
     border: 1px solid red;
-    color: white;
+    color: red;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 .box1 a{
-    color: white;
+    color: red;
 }
 
 .hide{
@@ -23,6 +24,12 @@ body{
 }
 
 h2{
-    color: white;
+    color: red;
+}
+
+#quiz{
+    max-width: 50%;
+    height: 50px;
+    margin: 0 auto;
 }
 
