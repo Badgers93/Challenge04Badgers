@@ -1,14 +1,12 @@
-// Advance through questions
-let currentQuestion = 0;
+// Global Variables
+let currentQuestionIndex = 0;
 let quizDiv = document.querySelector("#quiz");
-quizDiv.addEventListener("click", function(event){
-    if (event.target.matches("button")){
-        currentQuestion++;
-    }
-})
+let questionTitle = document.querySelector("#question");
+let answersElement = document.querySelector("#answers");
+let startButton = document.querySelector("#startButton");
+let timer = document.querySelector("#timer");
 
 // Timer
-let timer = document.querySelector("#timer");
 let timeLeft = 60;
 timer.textContent = timeLeft + " seconds remaining";
 
@@ -18,11 +16,15 @@ function runTimer(){
         timer.textContent = timeLeft + " seconds left";
 
         // fix this alerting at 1 second left
+        console.log("type of interval",typeof timerInterval);
         if(timeLeft === 0){
             clearInterval(timerInterval);
+        }
+        if (!timeLeft){
             alert("Times up!");
         }
     }, 1000);
+
 }
 
 // Questions
@@ -33,4 +35,31 @@ let questions = [{question: "Which hero's ultimate ability is Mass Serpant Wards
                  {question: "Who created DotA?", answers:["Gabe Newell", "Riot Games", "Icefrog", "EA Studios"], correctAnswer: "Icefrog"}
                 ]
 
-                
+startButton.addEventListener("click", startQuiz);
+function startQuiz(){
+    startButton.classList.add("hide");
+    quizDiv.classList.remove("hide");
+    getQuestion();
+
+}
+
+function getQuestion(){
+    let currentQuestion = questions[currentQuestionIndex]
+    questionTitle.textContent = currentQuestion.question;
+    for(let i = 0; i < currentQuestion.answers.length; i++){
+        let choice = currentQuestion.answers[i];
+        let choiceElement = document.createElement("button");
+        choiceElement.setAttribute("value", choice);
+        choiceElement.textContent = choice;
+        answersElement.appendChild(choiceElement);
+        choiceElement.addEventListener("click", getAnswer); 
+    }
+}
+function getAnswer(event){
+    if (event.target.matches("button")){
+        console.log("event", event);
+        console.log("target", event.target);
+        currentQuestionIndex++;
+        answersElement.innerHTML = "";
+        getQuestion();
+    }}

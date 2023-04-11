@@ -2,22 +2,27 @@ body{
     background-color: black;
 }
 
-h1{
+.box1{
     display: flex;
-    color: red;
-    font-size: 20px;
+    padding: 50px;
+    /* width: 100%; causing overflow for some reason*/ 
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 150px;
+    border: 1px solid red;
+    color: white;
 }
 
-#timer{
-    margin-left: 1100px;
+.box1 a{
+    color: white;
 }
 
-h1 a{
-    color: red;
+.hide{
+    display: none;
 }
 
-#quiz{
-    display: flex;
-    width: 400px;
-    height: 250px;
+h2{
+    color: white;
 }
+
