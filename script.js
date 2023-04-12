@@ -8,6 +8,7 @@ let formElement = document.querySelector("form");
 let timer = document.querySelector("#timer");
 let points = 0;
 let quizOver = false;
+let initialsInput = document.querySelector("#initials");
 
 // Questions
 let questions = [{question: "Which hero's ultimate ability is Mass Serpant Wards?", answers:["Shadow Shaman", "Natures Prophet", "Kunkka", "Venomancer"], correctAnswer: "Shadow Shaman"},
@@ -18,6 +19,8 @@ let questions = [{question: "Which hero's ultimate ability is Mass Serpant Wards
                 ]
 
 // Functions
+
+// start quiz
 startButton.addEventListener("click", runQuiz);
 function runQuiz(){
     runTimer();
@@ -26,6 +29,7 @@ function runQuiz(){
     getQuestion();
 }
 
+// get question and generate answer buttons
 function getQuestion(){
     let currentQuestion = questions[currentQuestionIndex]
     questionTitle.textContent = currentQuestion.question;
@@ -38,6 +42,8 @@ function getQuestion(){
     }
     answersElement.addEventListener("click", getAnswer); 
 }
+
+// checking answer logic
 function getAnswer(event){
     if (event.target.matches("button")){
         console.log("event", event);
@@ -65,6 +71,8 @@ function getAnswer(event){
         } 
     }}
 
+
+// timer
 let timeLeft = 60;
 timer.textContent = timeLeft + " seconds remaining";
 function runTimer(){
@@ -81,3 +89,11 @@ function runTimer(){
         }
     }, 1000);
 }
+
+// submit listener
+formElement.addEventListener("submit", function(event){
+    event.preventDefault();
+    let player = {name: initialsInput.value, score: points};
+    localStorage.setItem("player", JSON.stringify(player));
+    window.location.href = "./highscores.html";
+})

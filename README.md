@@ -6,7 +6,8 @@ User is presented a quiz about the popular online video-game Dota. Project utili
 ## Functionality
 Includes features such as:
     - points tracker
-    - leaderboard
+    - highscores page
+    - timer
 
 ## Usage
 Link to website: https://badgers93.github.io/Challenge04Badgers/
